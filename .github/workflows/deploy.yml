@@ -1,0 +1,25 @@
+name: Deploy to Upsun
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Upsun CLI
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/platformsh/cli/main/installer.sh | bash
+
+      - name: Authenticate to Upsun
+        run: |
+          platform auth:api-token login ${{ secrets.UPSUN_API_TOKEN }}
+
+      - name: Deploy to Upsun
+        run: |
+          platform push --yes
