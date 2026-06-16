@@ -9,24 +9,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # ✅ Step 1: Checkout code
+      # ✅ Checkout code
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # ✅ Step 2: Install Upsun CLI
+      # ✅ Install Upsun CLI
       - name: Install Upsun CLI
         run: |
           curl -fsSL https://raw.githubusercontent.com/platformsh/cli/main/installer.sh | bash
           echo "$HOME/bin" >> $GITHUB_PATH
 
-      # ✅ Step 3: Authenticate using API token (CORRECT METHOD)
-      - name: Authenticate to Upsun
-        env:
-          PLATFORM_API_TOKEN: ${{ secrets.UPSUN_API_TOKEN }}
-        run: |
-          platform auth:api-token-login
-
-      # ✅ Step 4: Deploy to Upsun
+      # ✅ Deploy using API token (NO LOGIN COMMAND)
       - name: Deploy to Upsun
+        env:
+          PLATFORM_CLI_TOKEN: ${{ secrets.UPSUN_API_TOKEN }}
         run: |
           platform push --yes
