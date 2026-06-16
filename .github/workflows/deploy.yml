@@ -18,7 +18,7 @@ jobs:
 
       - name: Authenticate to Upsun
         run: |
-          platform auth:api-token login ${{ secrets.UPSUN_API_TOKEN }}
+          platform auth:api-token-login ${{ secrets.UPSUN_API_TOKEN }}
 
       - name: Deploy to Upsun
         run: |
